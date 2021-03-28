@@ -711,8 +711,7 @@ testCssWideValues :
             | initial : Supported
             , inherit : Supported
             , unset : Supported
-
-            -- , revert : Supported
+            , revert : Supported
         }
      -> Style
     )
@@ -721,6 +720,272 @@ testCssWideValues propertyUnderTest =
     [ ( propertyUnderTest initial, "initial" )
     , ( propertyUnderTest inherit, "inherit" )
     , ( propertyUnderTest unset, "unset" )
+    , ( propertyUnderTest revert, "revert" )
+    ]
 
-    -- , ( propertyUnderTest revert, "revert" )
+
+testLength :
+    List
+        ( Value
+            { supported
+                | ch : Supported
+                , cm : Supported
+                , em : Supported
+                , ex : Supported
+                , inches : Supported
+                , mm : Supported
+                , pc : Supported
+                , pt : Supported
+                , px : Supported
+                , rem : Supported
+                , vh : Supported
+                , vw : Supported
+                , vmax : Supported
+                , vmin : Supported
+                , zero : Supported
+                , calc : Supported
+            }
+        , String
+        )
+testLength =
+    [ ( ch 2.3, "2.3ch" )
+    , ( cm 13.3, "13.3cm" )
+    , ( em 0.625, "0.625em" )
+    , ( ex 3.14, "3.14ex" )
+    , ( inches 2.54, "2.54in" )
+    , ( mm 12.345, "12.345mm" )
+    , ( pc 7.7, "7.7pc" )
+    , ( pt 65.4, "65.4pt" )
+    , ( px 1.5, "1.5px" )
+    , ( rem 5.3, "5.3rem" )
+    , ( vh 99.54, "99.54vh" )
+    , ( vw 33.333, "33.333vw" )
+    , ( vmax 4.73, "4.73vmax" )
+    , ( vmin 12.7, "12.7vmin" )
+    , ( zero, "0" )
+    , ( calc (rem 3.2) (minus (px 5.5)), "calc(3.2rem - 5.5px)" )
+    ]
+
+
+testLineWidth :
+    List
+        ( Value
+            { supported
+                | ch : Supported
+                , cm : Supported
+                , em : Supported
+                , ex : Supported
+                , inches : Supported
+                , mm : Supported
+                , pc : Supported
+                , pt : Supported
+                , px : Supported
+                , rem : Supported
+                , vh : Supported
+                , vw : Supported
+                , vmax : Supported
+                , vmin : Supported
+                , zero : Supported
+                , calc : Supported
+                , thin : Supported
+                , medium : Supported
+                , thick : Supported
+            }
+        , String
+        )
+testLineWidth =
+    testLength
+        ++ [ ( thin, "thin" )
+           , ( medium, "medium" )
+           , ( thick, "thick" )
+           ]
+
+
+testLineStyle :
+    List
+        ( Value
+            { provides
+                | none : Supported
+                , solid : Supported
+                , dotted : Supported
+                , dashed : Supported
+                , hidden : Supported
+                , double : Supported
+                , groove : Supported
+                , ridge : Supported
+                , inset : Supported
+                , outset : Supported
+            }
+        , String
+        )
+testLineStyle =
+    [ ( none, "none" )
+    , ( solid, "solid" )
+    , ( dotted, "dotted" )
+    , ( dashed, "dashed" )
+    , ( hidden, "hidden" )
+    , ( double, "double" )
+    , ( groove, "groove" )
+    , ( ridge, "ridge" )
+    , ( inset, "inset" )
+    , ( outset, "outset" )
+    ]
+
+
+testColor :
+    List
+        ( Value
+            { provides
+                | hsl : Supported
+                , hsla : Supported
+                , rgb : Supported
+                , rgba : Supported
+                , hex : Supported
+                , currentcolor : Supported
+            }
+        , String
+        )
+testColor =
+    [ ( hsl 120 0.5 0.5, "hsl(120,50%,50%)" )
+    , ( hsla 120 0.5 0.5 0.5, "hsla(120,50%,50%,0.5)" )
+    , ( rgb 255 230 211, "rgb(255,230,211)" )
+    , ( rgba 12 2 33 0.95, "rgba(12,2,33,0.95)" )
+    , ( hex "fff", "#fff" )
+    , ( hex "#14ac34", "#14ac34" )
+    , ( hex "#000c", "#000c" )
+    , ( hex "00112233", "#00112233" )
+    , ( currentcolor, "currentcolor" )
+    ]
+
+
+testListStyleType :
+    List
+        ( Value
+            { supported
+                | customIdent : Supported
+                , symbols : Supported
+                , string : Supported
+                , none : Supported
+                , arabicIndic : Supported
+                , armenian : Supported
+                , bengali : Supported
+                , cambodian : Supported
+                , circle : Supported
+                , cjkDecimal : Supported
+                , cjkEarthlyBranch : Supported
+                , cjkHeavenlyStem : Supported
+                , cjkIdeographic : Supported
+                , decimal : Supported
+                , decimalLeadingZero : Supported
+                , devanagari : Supported
+                , disc : Supported
+                , disclosureClosed : Supported
+                , disclosureOpen : Supported
+                , ethiopicNumeric : Supported
+                , georgian : Supported
+                , gujarati : Supported
+                , gurmukhi : Supported
+                , hebrew : Supported
+                , hiragana : Supported
+                , hiraganaIroha : Supported
+                , japaneseFormal : Supported
+                , japaneseInformal : Supported
+                , kannada : Supported
+                , katakana : Supported
+                , katakanaIroha : Supported
+                , khmer : Supported
+                , koreanHangulFormal : Supported
+                , koreanHanjaFormal : Supported
+                , koreanHanjaInformal : Supported
+                , lao : Supported
+                , lowerAlpha : Supported
+                , lowerArmenian : Supported
+                , lowerGreek : Supported
+                , lowerLatin : Supported
+                , lowerRoman : Supported
+                , malayalam : Supported
+                , monogolian : Supported
+                , myanmar : Supported
+                , oriya : Supported
+                , persian : Supported
+                , simpChineseFormal : Supported
+                , simpChineseInformal : Supported
+                , square : Supported
+                , tamil : Supported
+                , telugu : Supported
+                , thai : Supported
+                , tibetan : Supported
+                , tradChineseFormal : Supported
+                , tradChineseInformal : Supported
+                , upperAlpha : Supported
+                , upperArmenian : Supported
+                , upperLatin : Supported
+                , upperRoman : Supported
+            }
+        , String
+        )
+testListStyleType =
+    [ ( none, "none" )
+    , ( string "arbitrary\n\"\\", "\"arbitrary\\A \\\"\\\\\"" )
+    , ( customIdent "hello-world", "hello-world" )
+    , ( symbols (string "*") [ string "†" ], "symbols(\"*\" \"†\")" )
+    , ( symbols2 cyclic (url "https://example.com") [], "symbols(cyclic url(https://example.com))" )
+    , ( symbols2 numeric (string "*") [ url "https://example.com" ], "symbols(numeric \"*\" url(https://example.com))" )
+    , ( symbols2 alphabetic (linearGradient (stop <| hex "111") (stop <| hex "222") []) [ string "*" ], "symbols(alphabetic linear-gradient(#111 #222)\"*\"" )
+    , ( symbols2 symbolic (url "https://example.com") [], "symbols(symbolic url(https://example.com))" )
+    , ( symbols2 fixed (url "https://example.com") [], "symbols(fixed url(https://example.com))" )
+    , ( arabicIndic, "arabic-indic" )
+    , ( armenian, "armenian" )
+    , ( bengali, "bengali" )
+    , ( cambodian, "cambodian" )
+    , ( circle, "circle" )
+    , ( cjkDecimal, "cjk-decimal" )
+    , ( cjkEarthlyBranch, "cjk-earthly-branch" )
+    , ( cjkHeavenlyStem, "cjk-heavenly-stem" )
+    , ( cjkIdeographic, "cjk-ideographic" )
+    , ( decimal, "decimal" )
+    , ( decimalLeadingZero, "decimal-leading-zero" )
+    , ( devanagari, "devanagari" )
+    , ( disc, "disc" )
+    , ( disclosureClosed, "disclosure-closed" )
+    , ( disclosureOpen, "disclosure-open" )
+    , ( ethiopicNumeric, "ethiopic-numeric" )
+    , ( georgian, "georgian" )
+    , ( gujarati, "gujarati" )
+    , ( gurmukhi, "gurmukhi" )
+    , ( hebrew, "hebrew" )
+    , ( hiragana, "hiragana" )
+    , ( hiraganaIroha, "hiragana-iroha" )
+    , ( japaneseFormal, "japanese-formal" )
+    , ( japaneseInformal, "japanese-informal" )
+    , ( kannada, "kannada" )
+    , ( katakana, "katakana" )
+    , ( katakanaIroha, "katakana-iroha" )
+    , ( khmer, "khmer" )
+    , ( koreanHangulFormal, "korean-hangul-formal" )
+    , ( koreanHanjaFormal, "korean-hanja-formal" )
+    , ( koreanHanjaInformal, "korean-hanja-informal" )
+    , ( lao, "lao" )
+    , ( lowerAlpha, "lower-alpha" )
+    , ( lowerArmenian, "lower-armenian" )
+    , ( lowerGreek, "lower-greek" )
+    , ( lowerLatin, "lower-latin" )
+    , ( lowerRoman, "lower-roman" )
+    , ( malayalam, "malayalam" )
+    , ( myanmar, "myanmar" )
+    , ( oriya, "oriya" )
+    , ( persian, "persian" )
+    , ( simpChineseFormal, "simp-chinese-formal" )
+    , ( simpChineseInformal, "simp-chinese-informal" )
+    , ( square, "square" )
+    , ( tamil, "tamil" )
+    , ( telugu, "telugu" )
+    , ( thai, "thai" )
+    , ( tibetan, "tibetan" )
+    , ( tradChineseFormal, "trad-chinese-formal" )
+    , ( tradChineseInformal, "trad-chinese-informal" )
+    , ( upperAlpha, "upper-alpha" )
+    , ( upperArmenian, "upper-armenian" )
+    , ( upperLatin, "upper-latin" )
+    , ( upperRoman, "upper-roman" )
     ]

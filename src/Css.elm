@@ -74,9 +74,10 @@ module Css exposing
     , notAllowed, allScroll, colResize, rowResize, nResize, eResize, sResize
     , wResize, neResize, nwResize, seResize, swResize, ewResize, nsResize
     , neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
-    , ListStyle, ListStyleSupported
-    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside
-    , arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
+    , ListStyleType, ListStyleTypeSupported
+    , listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
+    , symbols, symbols2, cyclic, numeric, alphabetic, symbolic
+    , arabicIndic, armenian, bengali, cambodian, circle, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
     , auto, none
     , hidden, visible
     , contentBox, borderBox
@@ -456,11 +457,14 @@ See this [complete guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox
 @docs neswResize, nwseResize, zoomIn, zoomOut, grab, grabbing
 
 
-## List Style Type
+## List Style
 
-@docs ListStyle, ListStyleSupported
-@docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside
-@docs arabicIndic, armenian, bengali, cjkEarthlyBranch, cjkHeavenlyStem, devanagari, georgian, gujarati, gurmukhi, kannada, khmer, lao, malayalam, myanmar, oriya, telugu, thai
+@docs ListStyleType, ListStyleTypeSupported
+@docs listStyle, listStyle2, listStyle3, listStylePosition, inside, outside, listStyleType, string, customIdent, listStyleImage
+@docs symbols, symbols2, cyclic, numeric, alphabetic, symbolic
+@docs arabicIndic, armenian, bengali, cambodian, circle, cjkDecimal, cjkEarthlyBranch, cjkHeavenlyStem, cjkIdeographic, decimal, decimalLeadingZero, devanagari, disclosureClosed, disclosureOpen, disc, ethiopicNumeric, georgian, gujarati, gurmukhi, hebrew, hiragana, hiraganaIroha, japaneseFormal, japaneseInformal, kannada, katakana, katakanaIroha, khmer, koreanHangulFormal, koreanHanjaFormal, koreanHanjaInformal, lao, lowerAlpha, lowerArmenian, lowerGreek, lowerLatin, lowerRoman, malayalam, monogolian, myanmar, oriya, persian, simpChineseFormal, simpChineseInformal, tamil, telugu, thai, tibetan, tradChineseFormal, tradChineseInformal, upperAlpha, upperArmenian, upperLatin, upperRoman
+
+[`square`](#square) is also a supported value for [`listStyle`](#listStyle) and [`listStyleType`](#listStyleType).
 
 
 ## Shared Values
@@ -1520,12 +1524,15 @@ absolute =
 {-| A [`fixed` `position`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#Values)
 or [`fixed` `background-attachment`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment#Values)
 or [`fixed` `table-layout`](https://css-tricks.com/almanac/properties/t/table-layout/)
+or used in the [`symbols2`](#symbols2) function.
 
     position fixed
 
     backgroundAttachment fixed
 
     tableLayout fixed
+
+    symbols2 fixed (string "*") [ string "-" ]
 
 The default `position` value is [`static`](#static). See also [`position: sticky`](#sticky), and [the differences between absolute, relative, and fixed positioning](https://css-tricks.com/absolute-relative-fixed-positioining-how-do-they-differ/)
 
@@ -5818,56 +5825,119 @@ toTopRight =
 
 
 
-{- LIST STYLE SHORTHAND -}
+-- LIST STYLE --
 
 
-{-| A type alias used to accept a [list-style-type](https://developer.mozilla.org/fr/docs/Web/CSS/list-style-type)
+{-| A type alias used to accept a [list-style-type](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type)
 among other values.
 -}
-type alias ListStyleSupported v =
-    { v
-        | armenian : Supported
+type alias ListStyleTypeSupported supported =
+    { supported
+        | customIdent : Supported
+        , symbols : Supported
+        , string : Supported
+        , none : Supported
+        , arabicIndic : Supported
+        , armenian : Supported
         , bengali : Supported
+        , cambodian : Supported
+        , circle : Supported
+        , cjkDecimal : Supported
         , cjkEarthlyBranch : Supported
         , cjkHeavenlyStem : Supported
+        , cjkIdeographic : Supported
+        , decimal : Supported
+        , decimalLeadingZero : Supported
         , devanagari : Supported
+        , disc : Supported
+        , disclosureClosed : Supported
+        , disclosureOpen : Supported
+        , ethiopicNumeric : Supported
         , georgian : Supported
         , gujarati : Supported
         , gurmukhi : Supported
+        , hebrew : Supported
+        , hiragana : Supported
+        , hiraganaIroha : Supported
+        , japaneseFormal : Supported
+        , japaneseInformal : Supported
         , kannada : Supported
+        , katakana : Supported
+        , katakanaIroha : Supported
         , khmer : Supported
+        , koreanHangulFormal : Supported
+        , koreanHanjaFormal : Supported
+        , koreanHanjaInformal : Supported
         , lao : Supported
+        , lowerAlpha : Supported
+        , lowerArmenian : Supported
+        , lowerGreek : Supported
+        , lowerLatin : Supported
+        , lowerRoman : Supported
         , malayalam : Supported
+        , monogolian : Supported
         , myanmar : Supported
         , oriya : Supported
+        , persian : Supported
+        , simpChineseFormal : Supported
+        , simpChineseInformal : Supported
+        , square : Supported
+        , tamil : Supported
         , telugu : Supported
         , thai : Supported
+        , tibetan : Supported
+        , tradChineseFormal : Supported
+        , tradChineseInformal : Supported
+        , upperAlpha : Supported
+        , upperArmenian : Supported
+        , upperLatin : Supported
+        , upperRoman : Supported
     }
 
 
-{-| A type alias used to accept a [list-style-type](https://developer.mozilla.org/fr/docs/Web/CSS/list-style-type)
+{-| A type alias used to accept a [list-style-type](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type)
 -}
-type alias ListStyle =
-    ListStyleSupported {}
+type alias ListStyleType =
+    ListStyleTypeSupported {}
 
 
 {-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
+
+    listStyle lowerAlpha
+
+    listStyle outside
+
+    listStyle (url "https://example.com")
+
 -}
-listStyle : BaseValue ListStyle -> Style
+listStyle :
+    BaseValue
+        (ListStyleTypeSupported
+            (ImageSupported { inside : Supported, outside : Supported })
+        )
+    -> Style
 listStyle (Value val) =
     AppendProperty ("list-style:" ++ val)
 
 
 {-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
-listStyle2 : Value ListStyle -> Value ListStyle -> Style
+listStyle2 : Value ListStyleType -> Value ListStyleType -> Style
 listStyle2 (Value val1) (Value val2) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2)
 
 
 {-| The [`list-style`](https://css-tricks.com/almanac/properties/l/list-style/) shorthand property.
 -}
-listStyle3 : Value ListStyle -> Value ListStyle -> Value ListStyle -> Style
+listStyle3 :
+    Value ListStyleType
+    ->
+        Value
+            { inside : Supported
+            , outside : Supported
+            }
+    -> Value (ImageSupported { none : Supported })
+    -> Style
 listStyle3 (Value val1) (Value val2) (Value val3) =
     AppendProperty ("list-style:" ++ val1 ++ " " ++ val2 ++ " " ++ val3)
 
@@ -5889,7 +5959,8 @@ listStylePosition (Value pos) =
     AppendProperty ("list-style-position:" ++ pos)
 
 
-{-| The `inside` value for [`list-style-position`](#listStylePosition)
+{-| The `inside` value used for properties such as [`list-style-position`](#listStylePosition),
+and [`listStyle`](#listStyle).
 
     listStylePosition inside
 
@@ -5899,7 +5970,8 @@ inside =
     Value "inside"
 
 
-{-| The `inside` value for [`list-style-position`](#listStylePosition)
+{-| The `inside` value used for properties such as [`list-style-position`](#listStylePosition),
+and [`listStyle`](#listStyle).
 
     listStylePosition outside
 
@@ -5907,6 +5979,741 @@ inside =
 outside : Value { provides | outside : Supported }
 outside =
     Value "outside"
+
+
+{-| The [`list-style-type`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-type) property.
+
+    listStyleType decimalLeadingZero
+
+-}
+listStyleType : BaseValue ListStyleType -> Style
+listStyleType (Value val) =
+    AppendProperty ("list-style-type:" ++ val)
+
+
+{-| Produces an [`string`](https://developer.mozilla.org/en-US/docs/Web/CSS/string)
+value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType (string "> ")
+
+-}
+string : String -> Value { provides | string : Supported }
+string =
+    Value << enquoteString
+
+
+{-| Produces an [`custom-ident`](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident)
+value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType (customIdent "hello-world")
+
+**Note:** This method does not do any checking if the identifierer supplied is valid.
+
+-}
+customIdent : String -> Value { provides | customIdent : Supported }
+customIdent =
+    Value
+
+
+{-| Produces an [`symbols()`](https://developer.mozilla.org/en-US/docs/Web/CSS/symbols())
+function used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType).
+
+    listStyle (symbols (string "*") [ url "https://example.com" ])
+
+-}
+symbols :
+    Value (ImageSupported { string : Supported })
+    -> List (Value (ImageSupported { string : Supported }))
+    -> Value { provides | symbols : Supported }
+symbols (Value head) rest =
+    let
+        unpacked =
+            head :: List.map unpackValue rest
+
+        joined =
+            String.join " " unpacked
+    in
+    Value ("symbols(" ++ joined ++ ")")
+
+
+{-| Produces an [`symbols()`](https://developer.mozilla.org/en-US/docs/Web/CSS/symbols())
+function used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType).
+
+    listStyle (symbols2 cyclic (string "*") [ string "†", string "‡" ])
+
+-}
+symbols2 :
+    Value
+        { cyclic : Supported
+        , numeric : Supported
+        , alphabetic : Supported
+        , symbolic : Supported
+        , fixed : Supported
+        }
+    -> Value (ImageSupported { string : Supported })
+    -> List (Value (ImageSupported { string : Supported }))
+    -> Value { provides | symbols : Supported }
+symbols2 (Value symbolsType) (Value head) rest =
+    let
+        unpacked =
+            head :: List.map unpackValue rest
+
+        joined =
+            String.join " " unpacked
+    in
+    Value ("symbols(" ++ symbolsType ++ " " ++ joined ++ ")")
+
+
+{-| The `cyclic` value used by [`symbols2`](#symbols2)
+
+    symbols2 cyclic (string "*") [ string "-" ]
+
+-}
+cyclic : Value { provides | cyclic : Supported }
+cyclic =
+    Value "cyclic"
+
+
+{-| The `numeric` value used by [`symbols2`](#symbols2)
+
+    symbols2 numeric (string "0") [ string "1" ]
+
+-}
+numeric : Value { provides | numeric : Supported }
+numeric =
+    Value "numeric"
+
+
+{-| The `alphabetic` value used by [`symbols2`](#symbols2)
+
+    symbols2 alphabetic (string "a") [ string "b" ]
+
+-}
+alphabetic : Value { provides | alphabetic : Supported }
+alphabetic =
+    Value "alphabetic"
+
+
+{-| The `symbolic` value used by [`symbols2`](#symbols2)
+
+    symbols2 symbolic (string "†") [ string "‡" ]
+
+-}
+symbolic : Value { provides | symbolic : Supported }
+symbolic =
+    Value "symbolic"
+
+
+{-| The [`list-style-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/list-style-image) property.
+
+    listStyleImage (url "https://example.com")
+
+-}
+listStyleImage : BaseValue (ImageSupported { none : Supported }) -> Style
+listStyleImage (Value val) =
+    AppendProperty ("list-style-image:" ++ val)
+
+
+
+-- LIST STYLE TYPE --
+
+
+{-| The `arabic-indic` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType arabicIndic
+
+-}
+arabicIndic : Value { provides | arabicIndic : Supported }
+arabicIndic =
+    Value "arabic-indic"
+
+
+{-| The `armenian` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType armenian
+
+-}
+armenian : Value { provides | armenian : Supported }
+armenian =
+    Value "armenian"
+
+
+{-| The `bengali` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType bengali
+
+-}
+bengali : Value { provides | bengali : Supported }
+bengali =
+    Value "bengali"
+
+
+{-| The `cambodian` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType cambodian
+
+-}
+cambodian : Value { provides | cambodian : Supported }
+cambodian =
+    Value "cambodian"
+
+
+{-| The `circle` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType circle
+
+-}
+circle : Value { provides | circle : Supported }
+circle =
+    Value "circle"
+
+
+{-| The `cjk-decimal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType cjkDecimal
+
+-}
+cjkDecimal : Value { provides | cjkDecimal : Supported }
+cjkDecimal =
+    Value "cjk-decimal"
+
+
+{-| The `cjk-earthly-branch` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType cjkEarthlyBranch
+
+-}
+cjkEarthlyBranch : Value { provides | cjkEarthlyBranch : Supported }
+cjkEarthlyBranch =
+    Value "cjk-earthly-branch"
+
+
+{-| The `cjk-heavenly-stem` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType cjkHeavenlyStem
+
+-}
+cjkHeavenlyStem : Value { provides | cjkHeavenlyStem : Supported }
+cjkHeavenlyStem =
+    Value "cjk-heavenly-stem"
+
+
+{-| The `cjk-ideographic` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType cjkIdeographic
+
+-}
+cjkIdeographic : Value { provides | cjkIdeographic : Supported }
+cjkIdeographic =
+    Value "cjk-ideographic"
+
+
+{-| The `decimal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType decimal
+
+-}
+decimal : Value { provides | decimal : Supported }
+decimal =
+    Value "decimal"
+
+
+{-| The `decimal-leading-zero` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType decimalLeadingZero
+
+-}
+decimalLeadingZero : Value { provides | decimalLeadingZero : Supported }
+decimalLeadingZero =
+    Value "decimal-leading-zero"
+
+
+{-| The `devanagari` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType devanagari
+
+-}
+devanagari : Value { provides | devanagari : Supported }
+devanagari =
+    Value "devanagari"
+
+
+{-| The `disc` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType disc
+
+-}
+disc : Value { provides | disc : Supported }
+disc =
+    Value "disc"
+
+
+{-| The `disclosure-closed` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType disclosureClosed
+
+-}
+disclosureClosed : Value { provides | disclosureClosed : Supported }
+disclosureClosed =
+    Value "disclosure-closed"
+
+
+{-| The `disclosure-open` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType disclosureOpen
+
+-}
+disclosureOpen : Value { provides | disclosureOpen : Supported }
+disclosureOpen =
+    Value "disclosure-open"
+
+
+{-| The `ethiopic-numeric` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType ethiopicNumeric
+
+-}
+ethiopicNumeric : Value { provides | ethiopicNumeric : Supported }
+ethiopicNumeric =
+    Value "ethiopic-numeric"
+
+
+{-| The `georgian` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType georgian
+
+-}
+georgian : Value { provides | georgian : Supported }
+georgian =
+    Value "georgian"
+
+
+{-| The `gujarati` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType gujarati
+
+-}
+gujarati : Value { provides | gujarati : Supported }
+gujarati =
+    Value "gujarati"
+
+
+{-| The `gurmukhi` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType gurmukhi
+
+-}
+gurmukhi : Value { provides | gurmukhi : Supported }
+gurmukhi =
+    Value "gurmukhi"
+
+
+{-| The `hebrew` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType hebrew
+
+-}
+hebrew : Value { provides | hebrew : Supported }
+hebrew =
+    Value "hebrew"
+
+
+{-| The `hiragana` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType hiragana
+
+-}
+hiragana : Value { provides | hiragana : Supported }
+hiragana =
+    Value "hiragana"
+
+
+{-| The `hiragana-iroha` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType hiraganaIroha
+
+-}
+hiraganaIroha : Value { provides | hiraganaIroha : Supported }
+hiraganaIroha =
+    Value "hiragana-iroha"
+
+
+{-| The `japanese-formal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType japaneseFormal
+
+-}
+japaneseFormal : Value { provides | japaneseFormal : Supported }
+japaneseFormal =
+    Value "japanese-formal"
+
+
+{-| The `japanese-informal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType japaneseInformal
+
+-}
+japaneseInformal : Value { provides | japaneseInformal : Supported }
+japaneseInformal =
+    Value "japanese-informal"
+
+
+{-| The `kannada` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType kannada
+
+-}
+kannada : Value { provides | kannada : Supported }
+kannada =
+    Value "kannada"
+
+
+{-| The `katakana` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType katakana
+
+-}
+katakana : Value { provides | katakana : Supported }
+katakana =
+    Value "katakana"
+
+
+{-| The `katakana-iroha` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType katakanaIroha
+
+-}
+katakanaIroha : Value { provides | katakanaIroha : Supported }
+katakanaIroha =
+    Value "katakana-iroha"
+
+
+{-| The `khmer` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType khmer
+
+-}
+khmer : Value { provides | khmer : Supported }
+khmer =
+    Value "khmer"
+
+
+{-| The `korean-hangul-formal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType koreanHangulFormal
+
+-}
+koreanHangulFormal : Value { provides | koreanHangulFormal : Supported }
+koreanHangulFormal =
+    Value "korean-hangul-formal"
+
+
+{-| The `korean-hanja-formal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType koreanHanjaFormal
+
+-}
+koreanHanjaFormal : Value { provides | koreanHanjaFormal : Supported }
+koreanHanjaFormal =
+    Value "korean-hanja-formal"
+
+
+{-| The `korean-hanja-informal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType koreanHanjaInformal
+
+-}
+koreanHanjaInformal : Value { provides | koreanHanjaInformal : Supported }
+koreanHanjaInformal =
+    Value "korean-hanja-informal"
+
+
+{-| The `lao` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType lao
+
+-}
+lao : Value { provides | lao : Supported }
+lao =
+    Value "lao"
+
+
+{-| The `lower-alpha` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType lowerAlpha
+
+-}
+lowerAlpha : Value { provides | lowerAlpha : Supported }
+lowerAlpha =
+    Value "lower-alpha"
+
+
+{-| The `lower-armenian` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType lowerArmenian
+
+-}
+lowerArmenian : Value { provides | lowerArmenian : Supported }
+lowerArmenian =
+    Value "lower-armenian"
+
+
+{-| The `lower-greek` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType lowerGreek
+
+-}
+lowerGreek : Value { provides | lowerGreek : Supported }
+lowerGreek =
+    Value "lower-greek"
+
+
+{-| The `lower-latin` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType lowerLatin
+
+-}
+lowerLatin : Value { provides | lowerLatin : Supported }
+lowerLatin =
+    Value "lower-latin"
+
+
+{-| The `lower-roman` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType lowerRoman
+
+-}
+lowerRoman : Value { provides | lowerRoman : Supported }
+lowerRoman =
+    Value "lower-roman"
+
+
+{-| The `malayalam` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType malayalam
+
+-}
+malayalam : Value { provides | malayalam : Supported }
+malayalam =
+    Value "malayalam"
+
+
+{-| The `monogolian` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType monogolian
+
+-}
+monogolian : Value { provides | monogolian : Supported }
+monogolian =
+    Value "monogolian"
+
+
+{-| The `myanmar` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType myanmar
+
+-}
+myanmar : Value { provides | myanmar : Supported }
+myanmar =
+    Value "myanmar"
+
+
+{-| The `oriya` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType oriya
+
+-}
+oriya : Value { provides | oriya : Supported }
+oriya =
+    Value "oriya"
+
+
+{-| The `persian` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType persian
+
+-}
+persian : Value { provides | persian : Supported }
+persian =
+    Value "persian"
+
+
+{-| The `simp-chinese-formal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType simpChineseFormal
+
+-}
+simpChineseFormal : Value { provides | simpChineseFormal : Supported }
+simpChineseFormal =
+    Value "simp-chinese-formal"
+
+
+{-| The `simp-chinese-informal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType simpChineseInformal
+
+-}
+simpChineseInformal : Value { provides | simpChineseInformal : Supported }
+simpChineseInformal =
+    Value "simp-chinese-informal"
+
+
+{-| The `tamil` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType tamil
+
+-}
+tamil : Value { provides | tamil : Supported }
+tamil =
+    Value "tamil"
+
+
+{-| The `telugu` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType telugu
+
+-}
+telugu : Value { provides | telugu : Supported }
+telugu =
+    Value "telugu"
+
+
+{-| The `thai` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType thai
+
+-}
+thai : Value { provides | thai : Supported }
+thai =
+    Value "thai"
+
+
+{-| The `tibetan` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType tibetan
+
+-}
+tibetan : Value { provides | tibetan : Supported }
+tibetan =
+    Value "tibetan"
+
+
+{-| The `trad-chinese-formal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType tradChineseFormal
+
+-}
+tradChineseFormal : Value { provides | tradChineseFormal : Supported }
+tradChineseFormal =
+    Value "trad-chinese-formal"
+
+
+{-| The `trad-chinese-informal` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType tradChineseInformal
+
+-}
+tradChineseInformal : Value { provides | tradChineseInformal : Supported }
+tradChineseInformal =
+    Value "trad-chinese-informal"
+
+
+{-| The `upper-alpha` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType upperAlpha
+
+-}
+upperAlpha : Value { provides | upperAlpha : Supported }
+upperAlpha =
+    Value "upper-alpha"
+
+
+{-| The `upper-armenian` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType upperArmenian
+
+-}
+upperArmenian : Value { provides | upperArmenian : Supported }
+upperArmenian =
+    Value "upper-armenian"
+
+
+{-| The `upper-latin` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType upperLatin
+
+-}
+upperLatin : Value { provides | upperLatin : Supported }
+upperLatin =
+    Value "upper-latin"
+
+
+{-| The `upper-roman` value used by properties such as [`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType)
+
+    listStyleType upperRoman
+
+-}
+upperRoman : Value { provides | upperRoman : Supported }
+upperRoman =
+    Value "upper-roman"
 
 
 
@@ -8717,9 +9524,13 @@ butt =
     Value "butt"
 
 
-{-| A `square` value for the [`strokeLinecap`](#strokeLinecap) property.
+{-| The `square` value used by properties such as [`strokeLinecap`](#strokeLinecap),
+[`listStyle`](#listStyle),
+and [`listStyleType`](#listStyleType).
 
-      strokeLinecap square
+    strokeLinecap square
+
+    listStyleType square
 
 -}
 square : Value { provides | square : Supported }
