@@ -13,3 +13,4 @@ script:
   # (This is a hack to resove fetching error. Should be `elm diff > /dev/null` normally)
   - elm diff 16.0.0 > /dev/null
   - npm test
+  - npm run validate > /dev/null
